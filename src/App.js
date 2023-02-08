@@ -1,24 +1,15 @@
-import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./routes/Home.js";
+import Detail from "./routes/Detail.js";
 
 function App() {
-  const [movies, setMovies] = useState([]);
-  useEffect(() => {
-    //API documentation: https://yts.mx/api
-    fetch(
-      "https://yts.mx/api/v2/list_movies.json?minimum_rating=8.0&sort_by=year"
-    )
-      .then((response) => response.json())
-      .then((json) => setMovies(json.data.movies));
-  }, []);
-  console.log(movies);
   return (
-    <div>
-      <ul>
-        {movies.map((movie) => (
-          <li key={movie.id}>{movie.title}</li>
-        ))}
-      </ul>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/movie/:id" element={<Detail />} />
+      </Routes>
+    </Router>
   );
 }
 
